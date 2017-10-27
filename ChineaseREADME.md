@@ -50,6 +50,8 @@ Vue.use(scroller)
 | isUpLoad    | `[Boolean]`是否开启上拉加载      |   no   |  false  |
 |horizonalMode| `[Boolean]`是否开启横向滚动模式(开启后禁止垂直滑动和下拉刷新)|   no   |  false  |
 
+> 注意:当切换到horizonalMode后,只有上拉加载容器,表现为右滑加载,自定义事件名称不变.
+
 #### 组件自定义事件
 * `downFresh `   下拉刷新的自定义事件，直接将ajax逻辑写在里面，必须保证isDownFresh为true. 
 * `upLoad `   上拉加载的自定义事件，直接将ajax逻辑写在里面，isUpLoad为true，可以通过组件自带的closeLoad()方法手动禁止加载然后不再请求数据. 

@@ -54,6 +54,8 @@ Vue.use(scroller)
 | isUpLoad    | `[Boolean]`enable infinite loading       |   no   |  false  |
 |horizonalMode| `[Boolean]`enable horizonal scroller mode|   no   |  false  |
 
+> Notice:while switching horizonalMode,only upLoad is abled to work,it shows that scroll-right infinite loading also the emit event name is the same to `upLoad`.
+
 #### emit events
 * `downFresh `   when you pull down your container at the top border,write your logic in it usually write the ajax.Make sure the `isDownFresh` prop is `true`. 
 * `upLoad `   when you scroll your container at the bottom border,write your logic in it usually write the ajax.Make sure the `isUpLoad` prop is `true`. 
@@ -62,6 +64,8 @@ Vue.use(scroller)
 * `afterScroll `  after you scroll just mean you raise your finger from the container.
 
 #### plugin methods
+> Notice:You have to add `ref` to the component `scroller` and then use this.$refs to get following methods.
+
 * `closeLoad (Function) `  no param,forbid infinite loading animation,usually use when your ajax finished.
 * `getPosition (Function)`  no param,get current position of scroller content. 
 * `scrollTo (Function(Number,Boolean)) `   scroll to a position in scroller content,two params,the first param required `Number`,the second param isn't required ,it means whether open or close the scrolling animation.
