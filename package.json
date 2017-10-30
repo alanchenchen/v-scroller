@@ -1,7 +1,7 @@
 {
   "name": "v-scroller",
   "description": "a plugin for vue scroller ",
-  "version": "3.0.0-0",
+  "version": "1.2.0",
   "author": "chenchen <chenchen@ziteng.cn>",
   "private": false,
   "license": "MIT",
