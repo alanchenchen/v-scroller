@@ -60,7 +60,7 @@ Vue.use(scroller)
 
 #### 组件自定义事件
 * `downFresh `   下拉刷新的自定义事件，直接将ajax逻辑写在里面，必须保证isDownFresh为true. 
-* `upLoad `   上拉加载的自定义事件，直接将ajax逻辑写在里面，isUpLoad为true，可以通过组件自带的closeLoad()方法手动禁止加载然后不再请求数据. 
+* `upLoad `   上拉加载的自定义事件，直接将ajax逻辑写在里面，必须保证isUpLoad为true，可以通过组件自带的closeLoad()方法手动禁止加载然后不再请求数据. 
 * `beforeScroll `  滚动前，即手指刚触摸滑动区域，还未移动手指
 * `scroll `  手指滑动中，不包括手指抬起后的滚动动画状态
 * `afterScroll `  手指抬起，一般在此钩子结束后，滑动区域开启滚动动画
@@ -70,7 +70,7 @@ Vue.use(scroller)
 
 * `closeLoad (Function) `  此函数不传参，调用后禁止上拉加载动画，一般用在upLoad函数里请求数据结束时调用
 * `getPosition (Function)`  此函数不传参，获取滚动区域的位移坐标值，返回一个对象,如{x:0,y:0}，可以在钩子函数里调用，实时获取
-* `scrollTo (Function(Number,Boolean)) `   两个参数，第一个必选，是需要位移的终点坐标值，调用后自动判断是x位移还是y位置，第二个参数可选，默认为false，true表示滚动动画
+* `scrollTo (Function(Number,Boolean)) `   两个参数，第一个必选，是需要位移的终点坐标值，调用后自动判断是x位移还是y位移，第二个参数可选，默认为false，true表示有滚动动画
 
 #### slots插槽
 
