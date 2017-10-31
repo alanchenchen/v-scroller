@@ -16,7 +16,7 @@
 ## Why making this plugin
 * There are so many vue plugins on github,but i haven't found a suitable mini vue plugin for scroller.The best scroller plugin i have seen is the 'better-scroller',however it's not for vue especially.I decide to make a mini vue scroller plugin for my own company programs also for people who wanna use scroller simply.
 
-## Waht you can do with the plugin
+## What you can do with the plugin
 * You can use it to make a scroller container includes pulling-refresh,infinite-loading and horizonal scroller also supporting nesting different direction scroller.
 
 ![horizonalMode](./horizonalMode.gif) ![verticalMode](./verticalMode.gif)
