@@ -3,20 +3,20 @@
 
 > pluginName:  v-scroller
 
-> version: 1.2.1
+> version: 1.2.2
 
 > author:	Alan Chen
 
 > github:	alanchenchen@github.com
 
-> date:	2017/10/24
+> date:	2017/11/15
 
 #### This plugin is just only adapted for mobile.
 
 ## Why making this plugin
 * There are so many vue plugins on github,but i haven't found a suitable mini vue plugin for scroller.The best scroller plugin i have seen is the 'better-scroller',however it's not for vue especially.I decide to make a mini vue scroller plugin for my own company programs also for people who wanna use scroller simply.
 
-## Waht you can do with the plugin
+## What you can do with the plugin
 * You can use it to make a scroller container includes pulling-refresh,infinite-loading and horizonal scroller also supporting nesting different direction scroller.
 
 ![horizonalMode](./horizonalMode.gif) ![verticalMode](./verticalMode.gif)
@@ -67,6 +67,7 @@ Vue.use(scroller)
 > Notice:You have to add `ref` to the component `scroller` and then use this.$refs to get following methods.
 
 * `closeLoad (Function) `  no param,forbid infinite loading animation,usually use when your ajax finished.
+* `refreshLoad(Function) ` no param,refresh infinite loading .
 * `getPosition (Function)`  no param,get current position of scroller content. 
 * `scrollTo (Function(Number,Boolean)) `   scroll to a position in scroller content,two params,the first param required `Number`,the second param isn't required ,it means whether open or close the scrolling animation.
 

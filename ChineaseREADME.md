@@ -1,16 +1,15 @@
 # v-scroller
-> A Vue plugin for scroller
+> A mobile Vue plugin for scroller
 
 > pluginName:  v-scroller
 
-> version: 1.2.1
+> version: 1.2.2
 
 > author:	Alan Chen
 
 > github:	alanchenchen@github.com
 
-> date:	2017/10/24
-
+> date:	2017/11/15
 * 请注意：本插件只适配了移动端...有bug请直接提issue...
 
 ## 重要更新：
@@ -18,6 +17,12 @@
 * 2.(重要) 优化多个不同模式scroller嵌套中的滚动影响问题，现在会自动计算是垂直滚动还是水平滚动
 * 3.(重要) 模仿原生移动端app滚动，添加位移状态监测，确保每次位移过程中只会做一种方向的滚动(手指触摸过程),避免滚动重叠混乱
 * 4.(重要) 解决嵌套scroller中下次滚动继承上次反向滚动运动的bug，现在不会出现突然位移飘的情况
+
+## 最新更新：
+* 1.修正实时滚动的坐标值
+* 2.去除不必要的代码
+* 3.去除禁止滚动层浏览器默认事件的设置，scroller层可以有其它的事件了，避免了scroller内路由跳转失效
+* 4.(重要) 新增refreshLoad方法，用来刷新上拉加载，重置刷新容器功能，方法调用跟closeLoad方法一致
 
 ## 插件可以做什么？
 * 此插件是大多ui库实现组件的基础插件，你可以直接拿来做移动端滚动，也可以使用下拉刷新和上拉加载容器，还可以嵌套多个scroller组件实现横向滚动和垂直滚动(`注意单个scoller只能一个方向滚动`)。插件暴露了一些方法，可以搭配写出回到顶部和banner等组件，搭配着钩子函数可以实时监测scroller滚动的位置来解决比较复杂的业务逻辑
@@ -60,7 +65,7 @@ Vue.use(scroller)
 
 #### 组件自定义事件
 * `downFresh `   下拉刷新的自定义事件，直接将ajax逻辑写在里面，必须保证isDownFresh为true. 
-* `upLoad `   上拉加载的自定义事件，直接将ajax逻辑写在里面，isUpLoad为true，可以通过组件自带的closeLoad()方法手动禁止加载然后不再请求数据. 
+* `upLoad `   上拉加载的自定义事件，直接将ajax逻辑写在里面，必须保证isUpLoad为true，可以通过组件自带的closeLoad()方法手动禁止加载然后不再请求数据. 
 * `beforeScroll `  滚动前，即手指刚触摸滑动区域，还未移动手指
 * `scroll `  手指滑动中，不包括手指抬起后的滚动动画状态
 * `afterScroll `  手指抬起，一般在此钩子结束后，滑动区域开启滚动动画
@@ -69,8 +74,9 @@ Vue.use(scroller)
 > 注意：必须给scroller组件绑定一个ref，然后通过this.$refs拿到组件再调用下列方法，并没有在插件里集成实例方法
 
 * `closeLoad (Function) `  此函数不传参，调用后禁止上拉加载动画，一般用在upLoad函数里请求数据结束时调用
+* `refreshLoad(Function) `  此函数不传参，调用后重置上拉加载功能
 * `getPosition (Function)`  此函数不传参，获取滚动区域的位移坐标值，返回一个对象,如{x:0,y:0}，可以在钩子函数里调用，实时获取
-* `scrollTo (Function(Number,Boolean)) `   两个参数，第一个必选，是需要位移的终点坐标值，调用后自动判断是x位移还是y位置，第二个参数可选，默认为false，true表示滚动动画
+* `scrollTo (Function(Number,Boolean)) `   两个参数，第一个必选，是需要位移的终点坐标值，调用后自动判断是x位移还是y位移，第二个参数可选，默认为false，true表示有滚动动画
 
 #### slots插槽
 
