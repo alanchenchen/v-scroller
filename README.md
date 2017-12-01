@@ -3,15 +3,17 @@
 
 > pluginName:  v-scroller
 
-> version: 1.2.2
+> version: 1.2.3
 
 > author:	Alan Chen
 
 > github:	alanchenchen@github.com
 
-> date:	2017/11/15
+> date:	2017/12/01
 
 #### This plugin is just only adapted for mobile.
+
+> Please go to the release to see version logs.
 
 ## Why making this plugin
 * There are so many vue plugins on github,but i haven't found a suitable mini vue plugin for scroller.The best scroller plugin i have seen is the 'better-scroller',however it's not for vue especially.I decide to make a mini vue scroller plugin for my own company programs also for people who wanna use scroller simply.
@@ -41,6 +43,142 @@ Vue.use(scroller)
 * use the component scroller directly in your vue spa file or the Vue instance
 ``` javascript 
 <scroller />
+```
+
+## DEMO Codes
+``` javascript 
+<template>
+	<!--verticalMode and infinite and refresh-->
+	<scroller
+		ref="scroll"
+		@downFresh="downfresh"
+		@upLoad="upload"
+		@scroll="showPosition"
+		@afterScroll="showPosition"
+		:snapping="snapping"
+		:smooth="smooth"
+		:isDownFresh="isDownFresh"
+		:isUpLoad="isUpLoad"
+		>
+		<div slot="nomore" class="nomore">已经到底了，逗逼~</div>
+		<ul>
+			<li :class="{active:index%2==0}" v-for="(item,index) of num" :key="item">第{{item}}条项目列表</li>
+		</ul>
+	</scroller>
+	
+	<!--nesting scroller with horizonalMode and verticalMode-->
+	<scroller
+		ref="scroll"
+		:snapping="snapping"
+		@scroll="showPosition"
+		@afterScroll="showPosition"
+		>
+		<div class="_testBox" v-for="item of 20">
+			<scroller
+				@upLoad="upload"
+				:snapping="snapping"
+				:isUpLoad="isUpLoad"
+				:horizonalMode="horizonalMode"
+				>
+				<div class="boxRoom">
+					<div :class="{active:index%2==0}" class="box" v-for="(item,index) of num" :key="item">{{item}}</div>		
+				</div>
+			</scroller>
+		</div>
+		<div slot="nomore" class="nomore">已经到底了，逗逼~</div>
+	</scroller>
+	<!--goTop using the scrollTo() function-->
+	<div class="record" @click="goTop">
+		x:{{left}},y:{{top}}
+	</div>
+</template>
+<script>
+export default{
+	data(){
+		return{
+			num:[],
+			snapping:true,
+			isDownFresh:true,
+			isUpLoad:true,
+			smooth:true,
+			horizonalMode:true,
+			left:0,
+			top:0
+		}
+	},
+	created(){
+		for(let i=0;i<5;i++){
+			this.num.push(i)
+		}
+	},
+	methods:{
+		downfresh(){
+			console.log('下拉刷新啦')
+			let b = this.num[0];
+			for(let i = b;i>=b-5;i--){
+				this.num.unshift(i);
+			}
+		},
+		upload(){
+			console.log('上拉加载啦')
+			if(this.num[this.num.length-1]<25){
+				let b = this.num[this.num.length-1];
+				for(let i = b+1;i<=b+5;i++){
+					this.num.push(i);
+				}
+			}else{
+				this.$refs.scroll.closeLoad();
+			}
+		},
+		showPosition(){
+			let {x:left,y:top} = this.$refs.scroll.getPosition();
+			this.left = left;
+			this.top = top;
+		},
+		goTop(){
+			this.$refs.scroll.scrollTo(0,true);
+			this.showPosition();
+		}
+	}
+}
+</script>
+```
+
+> It's suggested that write a single function for ajax in methods and then use the ajax function at the lifeCircle of created，you can continue to use it at the plugin emiting event -- upLoad.Like this：
+
+``` javascript 
+	created(){
+		//when the component created ,use the ajax function firstly
+		this.refreshData();
+	},
+	methods:{
+		refreshData(){
+			const data = `telephone=${this.$store.state.BookOrderInfo.telephone}&start=${this.start}&limit=${this.limit}`
+			this.$http({
+				method:'POST',
+				url:this.$_URL+'/api/listHistoryRecord',
+				data:data
+			})
+			.then(
+				res=>{
+					if(res.data.code == '0000'){
+						//if nomore data from the back-end ,use the plugin function closeLoad()
+						if(res.data.data.length==this.History.length){
+							this.$refs.scroller.closeLoad();
+						}else{
+							this.History = res.data.data;
+						}
+					}
+			})
+			.catch(
+				err=>console.log(err)
+			)
+		},
+		upLoad(){
+			this.limit+=this.limit;//this is the length of data while you request the back-end
+			this.refreshData();
+		}
+	}
 ```
 
 ## Options
