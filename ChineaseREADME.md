@@ -12,6 +12,11 @@
 > date:	2017/12/01
 * 请注意：本插件只适配了移动端...有bug请直接提issue...
 
+![](https://img.shields.io/badge/downloads-400%2B%2Ftotal-blue.svg)
+![](https://img.shields.io/badge/coverage-80%25-blue.svg)
+![](https://img.shields.io/badge/npm-%20v1.2.3-orange.svg)
+![](https://img.shields.io/badge/vue-%3E%3D2.0.0-orange.svg)
+
 ## 重要版本更新日志：
 ### v-1.2.0
 * 1.优化生命周期钩子函数
