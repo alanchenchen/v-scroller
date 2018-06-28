@@ -85,7 +85,7 @@ Vue.use(scroller)
 	
 	<!--水平滚动和垂直滚动嵌套-->
 	<scroller
-		ref="scroll"
+		ref="scroll"  
 		:snapping="snapping"
 		@scroll="showPosition"
 		@afterScroll="showPosition"
