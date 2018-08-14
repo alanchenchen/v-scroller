@@ -3,19 +3,21 @@
 
 > pluginName:  v-scroller
 
-> version: 1.2.3
+> version: 1.2.4
 
 > author:	Alan Chen
 
 > github:	alanchenchen@github.com
 
-> date:	2017/12/01
-* 请注意：本插件只适配了移动端...有bug请直接提issue...
+> date:	2018/08/14
+* 请注意：本插件只适配了移动端...有bug请直接提issue...一定要使用rem布局
 
 ![](https://img.shields.io/badge/downloads-400%2B%2Ftotal-blue.svg)
 ![](https://img.shields.io/badge/coverage-80%25-blue.svg)
-![](https://img.shields.io/badge/npm-%20v1.2.3-orange.svg)
+![](https://img.shields.io/badge/npm-v.1.2.4-green.svg)
 ![](https://img.shields.io/badge/vue-%3E%3D2.0.0-orange.svg)
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+
 
 ## 重要版本更新日志：
 ### v-1.2.0
@@ -35,6 +37,10 @@
 * 1.(重要)解决当滚动层高度小于滚动容器高度时边界滚动出现的bug，现在会自动计算边界值
 * 2.优化上拉加载loading的开关状态
 * 3.优化snapping模式正常滚动的惯性滚动
+### v-1.2.4
+* 1.(重要)给下拉刷新和上拉加载函数加入参数done。用来精准控制是否结束loading状态。
+* 2.抽离出组件的css到一个单独的css文件。
+* 3.新增downfreshText的slot，优化代码。
 
 ## 插件可以做什么？
 * 此插件是大多ui库实现组件的基础插件，你可以直接拿来做移动端滚动，也可以使用下拉刷新和上拉加载容器，还可以嵌套多个scroller组件实现横向滚动和垂直滚动(`注意单个scoller只能一个方向滚动`)。插件暴露了一些方法，可以搭配写出回到顶部和banner等组件，搭配着钩子函数可以实时监测scroller滚动的位置来解决比较复杂的业务逻辑
@@ -44,18 +50,20 @@
 ## 使用方法
 * 通过NPM 安装 v-scroller 插件
 ```node
-npm install v-scroller --save
+yarn add v-scroller   or   npm install v-scroller --save
 ```
 #### 1.在vue单文件里使用(vue-cli)
 * 通过import或者require 导入插件并手动调用Vue.use()  
 ``` javascript 
 import scroller from 'v-scroller'
+import from 'v-scroller/dist/v-scroller.css'
 Vue.use(scroller)
 ```
 #### 2.在script标签里使用
 * 直接在script标签里通过src引入，但你必须先引入vuejs的script  
 ``` html 
-<script src="dist/v-scroller.js"></script>
+<link rel="stylesheet" href="node_modules/v-scroller/dist/v-scroller.css"></link >
+<script src="node_modules/v-scroller/dist/v-scroller.js"></script>
 ```
 * 直接在vue单文件组件里使用或者在html里使用组件
 ``` javascript 
@@ -129,20 +137,22 @@ export default{
 		}
 	},
 	methods:{
-		downfresh(){
+		downfresh(done){
 			console.log('下拉刷新啦')
 			let b = this.num[0];
 			for(let i = b;i>=b-5;i--){
 				this.num.unshift(i);
 			}
+			done() //必须手动调用done来结束loading状态
 		},
-		upload(){
+		upload(done){
 			console.log('上拉加载啦')
 			if(this.num[this.num.length-1]<25){
 				let b = this.num[this.num.length-1];
 				for(let i = b+1;i<=b+5;i++){
 					this.num.push(i);
 				}
+				done() //必须手动调用done来结束loading状态
 			}else{
 				this.$refs.scroll.closeLoad();
 			}
@@ -169,7 +179,7 @@ export default{
 		this.refreshData();
 	},
 	methods:{
-		refreshData(){
+		refreshData(done){
 			const data = `telephone=${this.$store.state.BookOrderInfo.telephone}&start=${this.start}&limit=${this.limit}`
 			this.$http({
 				method:'POST',
@@ -181,9 +191,10 @@ export default{
 					if(res.data.code == '0000'){
 						//此处是判断数据加载完毕的条件，如果后台数据加载完毕，手动调用closeLoad()，不再请求后台
 						if(res.data.data.length==this.History.length){
-							this.$refs.scroller.closeLoad();
+							this.$refs.scroller.closeLoad()
 						}else{
-							this.History = res.data.data;
+							this.History = res.data.data
+							done()
 						}
 					}
 			})
@@ -191,9 +202,9 @@ export default{
 				err=>console.log(err)
 			)
 		},
-		upLoad(){
+		upLoad(done){
 			this.limit+=this.limit;//这里是请求后台的参数，数据的数量
-			this.refreshData();
+			this.refreshData(done)
 		}
 	}
 ```
@@ -212,8 +223,8 @@ export default{
 > 注意:当切换到horizonalMode后,只有上拉加载容器,表现为右滑加载,自定义事件名称不变.
 
 #### 组件自定义事件
-* `downFresh `   下拉刷新的自定义事件，直接将ajax逻辑写在里面，必须保证isDownFresh为true. 
-* `upLoad `   上拉加载的自定义事件，直接将ajax逻辑写在里面，必须保证isUpLoad为true，可以通过组件自带的closeLoad()方法手动禁止加载然后不再请求数据. 
+* `downFresh(done) `   下拉刷新的自定义事件，直接将ajax逻辑写在里面，必须保证isDownFresh为true.手动调用`done`来结束loading状态. 
+* `upLoad(done) `   上拉加载的自定义事件，直接将ajax逻辑写在里面，必须保证isUpLoad为true，可以通过组件自带的closeLoad()方法手动禁止加载然后不再请求数据. 手动调用`done`来结束loading状态.如果`horizonalMode`开启，则不会有`done`参数返回!
 * `beforeScroll `  滚动前，即手指刚触摸滑动区域，还未移动手指
 * `scroll `  手指滑动中，不包括手指抬起后的滚动动画状态
 * `afterScroll `  手指抬起，一般在此钩子结束后，滑动区域开启滚动动画
@@ -230,6 +241,7 @@ export default{
 
 | slot name    |      description                         | default     | suggest                 |
 |:------------:|:----------------------------------------:|:-----------:|:-----------------------:|
-| `downrefresh`| 显示下拉刷新过程中的动画，建议用svg       |   svg       |  建议加上spinner类名  |
+| `downfresh`| 显示下拉刷新过程中的动画，建议用svg       |   svg       |  建议加上spinner类名  |
+| `downfreshText`| 下拉刷新显示文本          |   下拉刷新   |                         |
 | `upload`     | 显示上拉加载过程中的动画，建议用svg        |   svg       |  建议加上spinner类名  |
 | `nomore`     | 禁止上拉加载后显示的内容，建议用文字    |没有更多内容了|  建议加上nomore类名  |

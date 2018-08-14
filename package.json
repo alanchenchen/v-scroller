@@ -1,32 +1,59 @@
 {
   "name": "v-scroller",
-  "description": "a plugin for vue scroller ",
-  "version": "1.2.3",
-  "author": "chenchen <chenchen@ziteng.cn>",
-  "private": false,
-  "license": "MIT",
+  "version": "1.2.4",
+  "description": "A plugin for vue scroller",
   "main": "dist/v-scroller.js",
+  "scripts": {
+    "config": "node config/index.js",
+    "build": "webpack --progress"
+  },
+  "keywords": [
+    "scroller",
+    "vue",
+    "nesting"
+  ],
+  "author": "Alan Chen",
+  "license": "MIT",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/alanchenchen/v-scroller"
   },
-  "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
-  },
+  "homepage": "https://github.com/alanchenchen/v-scroller",
   "dependencies": {
-    "vue": "^2.4.4"
+    "babel-runtime": "^6.26.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "cross-env": "^5.0.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "chalk": "^2.4.1",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.4",
+    "inquirer": "^6.1.0",
+    "uglifyjs-webpack-plugin": "^1.0.1",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack": "^3.8.1"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "stage-3"
+    ],
+    "plugins": [
+      [
+        "transform-runtime",
+        {
+          "polyfill": false,
+          "regenerator": true,
+          "moduleName": "babel-runtime"
+        }
+      ]
+    ]
   }
 }
