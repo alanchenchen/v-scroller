@@ -11,11 +11,10 @@
 
 > date:	2018/08/14
 
-![](https://img.shields.io/badge/downloads-400%2B%2Ftotal-blue.svg)
-![](https://img.shields.io/badge/coverage-80%25-blue.svg)
-![](https://img.shields.io/badge/npm-v.1.2.4-green.svg)
+![](https://img.shields.io/npm/dt/v-scroller.svg)
+![](https://img.shields.io/npm/v/v-scroller.svg)
 ![](https://img.shields.io/badge/vue-%3E%3D2.0.0-orange.svg)
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+![](https://img.shields.io/github/license/alanchenchen/v-scroller.svg)
 
 #### This plugin is just only adapted for mobile. Please use the rem layout
 
