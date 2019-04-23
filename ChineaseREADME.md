@@ -12,11 +12,10 @@
 > date:	2018/08/14
 * 请注意：本插件只适配了移动端...有bug请直接提issue...一定要使用rem布局
 
-![](https://img.shields.io/badge/downloads-400%2B%2Ftotal-blue.svg)
-![](https://img.shields.io/badge/coverage-80%25-blue.svg)
-![](https://img.shields.io/badge/npm-v.1.2.4-green.svg)
+![](https://img.shields.io/npm/dt/v-scroller.svg)
+![](https://img.shields.io/npm/v/v-scroller.svg)
 ![](https://img.shields.io/badge/vue-%3E%3D2.0.0-orange.svg)
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 
 ## 重要版本更新日志：
