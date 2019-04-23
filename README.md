@@ -14,7 +14,7 @@
 ![](https://img.shields.io/npm/dt/v-scroller.svg)
 ![](https://img.shields.io/npm/v/v-scroller.svg)
 ![](https://img.shields.io/badge/vue-%3E%3D2.0.0-orange.svg)
-![](https://img.shields.io/github/license/alanchenchen/v-scroller.svg)
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 #### This plugin is just only adapted for mobile. Please use the rem layout
 
